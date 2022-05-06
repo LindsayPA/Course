@@ -35,6 +35,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	UE_LOG(LogTemp, Warning, TEXT("grabber tick"));
 }
 
+//UFUNCTION
 FVector UGrabber::GetMaxGrabLocation() const
 {
 	return GetComponentLocation() +  UKismetMathLibrary::GetForwardVector(GetComponentRotation())* MaxGrabDistance; 
@@ -46,7 +47,14 @@ FVector UGrabber::GetHoldLocation() const
 	return GetComponentLocation() + UKismetMathLibrary::GetForwardVector(GetComponentRotation()) * HoldDistance;
 }
 
+//BLUEPRINT IMPLEMENTABLE EVENT
 UPhysicsHandleComponent* UGrabber::GetPhysicsComponent() const
 {
 	return GetOwner()->FindComponentByClass<UPhysicsHandleComponent>(); 
+}
+
+//BLUEPRINT NATIVE EVENT
+bool UGrabber::TraceForPhysicsBodies_Implementation(AActor*& HitActor, UPrimitiveComponent*& HitComponent)
+{
+	return false;
 }

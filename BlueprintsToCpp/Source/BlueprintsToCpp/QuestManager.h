@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "QuestInfo.h"
 #include "QuestManager.generated.h"
 
 UCLASS()
@@ -15,12 +16,28 @@ public:
 	// Sets default values for this actor's properties
 	AQuestManager();
 
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	void CompleteQuest(FName QuestId, bool CompleteWholeQuest); 
+
 protected:
 	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	virtual void BeginPlay() override;	
+	
+UFUNCTION(BlueprintPure, BlueprintImplementableEvent)
+		int32 GetQuestIndex(FName QuestId);
+	
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+
+
+
+protected: ///STRUCT list
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TArray<FQuestInfo> QuestList;
+
+
 
 };
