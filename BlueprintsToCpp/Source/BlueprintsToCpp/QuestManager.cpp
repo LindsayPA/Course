@@ -40,4 +40,12 @@ void AQuestManager::CompleteQuest_Implementation(FName QuestId, bool CompleteWho
 	}
 }
 
+FQuestInfo AQuestManager::GetQuest(FName Name) const
+{
+	return QuestList[GetQuestIndex(Name)];
+}
 
+//bool AQuestManager::IsActiveQuest(FName QuestId) const
+//{
+	//return false;
+//}

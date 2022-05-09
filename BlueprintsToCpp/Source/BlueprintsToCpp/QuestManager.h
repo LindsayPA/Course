@@ -7,6 +7,8 @@
 #include "QuestInfo.h"
 #include "QuestManager.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FCompletedQuestSignature, int32, Index);
+
 UCLASS()
 class BLUEPRINTSTOCPP_API AQuestManager : public AActor
 {
@@ -19,12 +21,22 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void CompleteQuest(FName QuestId, bool CompleteWholeQuest); 
 
+	UFUNCTION(BlueprintPure)
+		FQuestInfo GetQuest(FName Name) const;
+
+	UFUNCTION(BlueprintPure, BlueprintImplementableEvent)
+		bool IsActiveQuest(FName QuestId) const;
+
+	//LESSON 15: DELEGATES FOR BLUEPRINT
+	UPROPERTY(BlueprintAssignable, BlueprintCallable)
+		FCompletedQuestSignature CompletedQuest; 
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;	
 	
 UFUNCTION(BlueprintPure, BlueprintImplementableEvent)
-		int32 GetQuestIndex(FName QuestId);
+		int32 GetQuestIndex(FName QuestId) const;
 	
 
 public:	
