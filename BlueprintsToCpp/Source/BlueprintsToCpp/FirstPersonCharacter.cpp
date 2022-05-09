@@ -3,6 +3,7 @@
 
 #include "FirstPersonCharacter.h"
 #include "Components/InputComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
 AFirstPersonCharacter::AFirstPersonCharacter()
@@ -31,18 +32,35 @@ void AFirstPersonCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	PlayerInputComponent->BindAxis(TEXT("Forward"), this, &AFirstPersonCharacter::Forward);
-	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &AFirstPersonCharacter::Jump);
+	PlayerInputComponent->BindAxis(TEXT("Right"), this, &AFirstPersonCharacter::Right);
+	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &APawn::AddControllerPitchInput);
+	PlayerInputComponent->BindAxis(TEXT("LookRight"), this, &APawn::AddControllerYawInput);
+
+	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &ACharacter::Jump);
+
+	PlayerInputComponent->BindAction(TEXT("Grab"), EInputEvent::IE_Pressed, this, &AFirstPersonCharacter::Grab);
+	PlayerInputComponent->BindAction(TEXT("Grab"), EInputEvent::IE_Released, this, &AFirstPersonCharacter::Release);
 
 }
 
 //LESSON 17 BINDING PLAYER INPUT
 void AFirstPersonCharacter::Forward(float AxisValue)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Forward %f"), AxisValue);
+	GetCharacterMovement()->AddInputVector(GetActorForwardVector() * AxisValue);
 }
 
-void AFirstPersonCharacter::Jump()
+//LESSON 18 EXAMPLE 3 BINDING PLAYER INPUT 2
+void AFirstPersonCharacter::Right(float AxisValue)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Jump"));
+	GetCharacterMovement()->AddInputVector(GetActorRightVector() * AxisValue);
 }
 
+void AFirstPersonCharacter::Grab()
+{
+	GetGrabber()->Grab(); 
+}
+
+void AFirstPersonCharacter::Release()
+{
+	GetGrabber()->Release(); 
+}

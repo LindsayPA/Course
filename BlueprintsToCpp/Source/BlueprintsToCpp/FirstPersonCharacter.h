@@ -21,7 +21,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintPure)
-		UGrabber* GetGrabber() const; 
+		UGrabber* GetGrabber(); 
 
 public:	
 	// Called every frame
@@ -32,6 +32,8 @@ public:
 
 private: 
 	void Forward(float AxisValue); 
-	void Jump(); 
+	void Right(float AxisValue);
+	void Grab();
+	void Release(); 
 
 };
