@@ -31,7 +31,7 @@ void AFirstPersonCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	PlayerInputComponent->BindAxis(TEXT("Forward"), this, &AFirstPersonCharacter::Forward);
-	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &AFirstPersonCharacter::Jump)
+	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &AFirstPersonCharacter::Jump);
 
 }
 
@@ -43,6 +43,6 @@ void AFirstPersonCharacter::Forward(float AxisValue)
 
 void AFirstPersonCharacter::Jump()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Jump"), AxisValue);
+	UE_LOG(LogTemp, Warning, TEXT("Jump"));
 }
 
