@@ -38,6 +38,9 @@ void AQuestManager::CompleteQuest_Implementation(FName QuestId, bool CompleteWho
 	{
 		QuestList[QuestIndex].Progress = FMath::Min(Quest.Progress + 1, Quest.ProgressTotal); 
 	}
+
+	//LESSON 16 BROADCASTING
+	CompletedQuest.Broadcast(QuestIndex); 
 }
 
 FQuestInfo AQuestManager::GetQuest(FName Name) const

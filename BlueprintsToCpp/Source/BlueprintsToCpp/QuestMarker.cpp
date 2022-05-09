@@ -3,6 +3,13 @@
 
 #include "QuestMarker.h"
 
+void AQuestMarker::BeginPlay()
+{
+	//LESSON 16 SUBSCRIBE
+	GetQuestManager()->CompletedQuest.AddDynamic(this, &AQuestMarker::QuestUpdate);
+	RefreshVisibility(); 
+}
+
 // Sets default values
 AQuestMarker::AQuestMarker()
 {
@@ -23,6 +30,12 @@ void AQuestMarker::RefreshVisibility()
 	FQuestInfo Quest = GetQuestManager()->GetQuest(QuestName); 
 	bool Visibility = GetQuestManager()->IsActiveQuest(QuestName) && Quest.Progress == ShowAtProgress; 
 	ParticleSystem->SetVisibility(Visibility); 
+}
+
+void AQuestMarker::QuestUpdate(int32 Index)
+{
+	RefreshVisibility(); 
+
 }
 
 
